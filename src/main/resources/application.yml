@@ -1,1 +1,4 @@
-
+logging:
+  group:
+    app:
+      - me.itzg.githubreleasesproxy
