@@ -1,6 +1,6 @@
 ## Usage
 
-Create an `application.yml` file in the [places Spring Boot looks](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files) that contains mappings of application/repo name to source directory, such as:
+Create an `application.yml` (or `application.properties`) file in the [default places Spring Boot looks](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files) or in `$HOME/.github-releases-proxy/` that contains mappings of application/repo name to source directory, such as:
 
 ```yaml
 app:

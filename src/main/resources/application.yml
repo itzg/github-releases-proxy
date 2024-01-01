@@ -1,4 +1,9 @@
+
+
 logging:
   group:
     app:
       - me.itzg.githubreleasesproxy
+spring:
+  config:
+    import: optional:file:${user.home}/.github-releases-proxy/
