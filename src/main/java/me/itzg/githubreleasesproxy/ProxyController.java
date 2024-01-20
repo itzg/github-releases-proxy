@@ -41,7 +41,7 @@ public class ProxyController {
             return createRedirect(user, app, version, file);
         }
 
-        final String basePath = appProperties.appPaths().get(app);
+        final String basePath = resolveAppBasePath(app);
         if (basePath == null) {
             log.debug("No app mapping for {}", app);
             return createRedirect(user, app, version, file);
@@ -67,6 +67,24 @@ public class ProxyController {
         log.info("Providing {}", fileOnDisk);
 
         return ResponseEntity.ok(outputStream -> Files.copy(fileOnDisk, outputStream));
+    }
+
+    private String resolveAppBasePath(String app) {
+        final String configured = appProperties.appPaths().get(app);
+        if (configured != null) {
+            return configured;
+        }
+
+        if (app.contains("/") || app.contains("\\")) {
+            return null;
+        }
+
+        final Path resolved = Paths.get(".").resolve(app);
+        if (Files.isDirectory(resolved)) {
+            return resolved.toString();
+        }
+
+        return null;
     }
 
     private Path pickFileFromDisk(Path basePathDir, String app, String file) {
