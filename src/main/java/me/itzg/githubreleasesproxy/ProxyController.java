@@ -36,11 +36,6 @@ public class ProxyController {
     public ResponseEntity<StreamingResponseBody> getFile(@PathVariable String user, @PathVariable String app,
         @PathVariable String version, @PathVariable String file) {
 
-        if (appProperties.appPaths() == null) {
-            log.warn("No app path mappings have been declared");
-            return createRedirect(user, app, version, file);
-        }
-
         final String basePath = resolveAppBasePath(app);
         if (basePath == null) {
             log.debug("No app mapping for {}", app);
@@ -70,7 +65,7 @@ public class ProxyController {
     }
 
     private String resolveAppBasePath(String app) {
-        final String configured = appProperties.appPaths().get(app);
+        final String configured = appProperties.appPaths() != null ? appProperties.appPaths().get(app) : null;
         if (configured != null) {
             return configured;
         }
